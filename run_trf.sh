@@ -27,5 +27,5 @@ maxperiod=2000
 # run trf 
 for file in $genomesdir/*.fa
 do
-  $trfdir/trf $file ${matchscore} ${mismatchscore} ${indelscore} ${pm} ${pi} ${minscore} ${maxperiod} -f -d -h -l 6
+	$trfdir/trf $file ${matchscore} ${mismatchscore} ${indelscore} ${pm} ${pi} ${minscore} ${maxperiod} -f -d -h -l 6
 done
