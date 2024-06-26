@@ -6,7 +6,7 @@ snd_genome_shared_trs="$2"
 fst_genome_catalog="$3"
 snd_genome_catalog="$4"
 
-# Check if you provided all arguments
+# Check for required arguments
 if [ -z "$fst_genome_shared_trs" ]
 then
   echo "Script requires shared TRs file (.bed) from previous alignment step - first genome"
