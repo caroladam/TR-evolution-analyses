@@ -5,7 +5,7 @@ query_tr_list="$2"
 target_prefix="$3"
 query_prefix="$4"
 
-# Check if you provided all arguments
+# # Check for required arguments
 if [ -z "$lifted_trs" ]
 then
   echo "Script requires lifted TRs file (.bed) as argument"
