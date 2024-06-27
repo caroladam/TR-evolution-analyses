@@ -41,9 +41,9 @@ bedtools intersect -a "$fst_genome_catalog" -b tmp2_sorted -wa -wb > tmp3
 gawk -i inplace 'BEGIN {FS="\t"; OFS="\t"} {print $14, $15, $16, $17, $1, $2, $3, $4, $5, $6, $7, $8, $13}' tmp3
 
 # Intersect file with TRF catalog for the second genome
-bedtools intersect -a "$snd_genome_catalog" -b tmp3 -wa -wb > final_list_all_info.bed
+bedtools intersect -a "$snd_genome_catalog" -b tmp3 -wa -wb > homologous_tr_catalog.bed
 # Keep columns of interest and rearrange to keep first genome fields in the initial fields
-gawk -i inplace 'BEGIN {FS="\t"; OFS="\t"} {print $14, $15, $16, $17, $18, $19, $20, $21, $22, $1, $2, $3, $4, $5, $6, $7, $8, $9}' final_list_all_info.bed
+gawk -i inplace 'BEGIN {FS="\t"; OFS="\t"} {print $14, $15, $16, $17, $18, $19, $20, $21, $22, $1, $2, $3, $4, $5, $6, $7, $8, $9}' homologous_tr_catalog.bed
 
 # Remove temporary files
 rm tmp*
