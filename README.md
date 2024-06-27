@@ -63,7 +63,7 @@ This script processes tandem repeats (TRs) shared between two genomes and create
 `./get_putative_homology.sh -a genome1_shared_trs.bed -b genome2_shared_trs.bed -c genome1_trf_catalog.bed -d genome2_trf_catalog.bed`
 
 ### Output
-The final output file is named `final_list_all_info.bed` and contains the putative homologous TR catalog for the species pair.
+The final output file is named `homologous_tr_catalog.bed` and contains the putative homologous TR catalog for the species pair.
 
 ## Questions?
 Send your questions or suggestions to carolinaladam@gmail.com
