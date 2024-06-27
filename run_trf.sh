@@ -1,17 +1,20 @@
 #!/bin/bash
 
-genomesdir=$1
-trfdir=$2
+usage() {
+    echo "Usage: $0 <path_to_fasta_files> <path_to_trf_executable>"
+    exit 1
+}
 
-if [ -z $genomesdir ]
+# Check if arguments are provided
+if [ "$#" -ne 2 ]
 then
-	echo 'Script requires path to FASTA files as argument'
+    echo "Insufficient arguments."
+    usage
 fi
 
-if [ -z $trfdir ]
-then
-	echo 'Script requires path to TRF executable as argument'
-fi
+# Assign arguments to variables
+genomes_dir="$1"
+trf_dir="$2"
 
 echo "Running TRF"
 
@@ -24,8 +27,16 @@ pi=10
 minscore=24 
 maxperiod=2000 
 
-# run trf 
-for file in $genomesdir/*.fa
+# Run TRF on each .fa file in the genomes directory
+for fasta_file in "$genomes_dir"/*.fa
 do
-	$trfdir/trf $file ${matchscore} ${mismatchscore} ${indelscore} ${pm} ${pi} ${minscore} ${maxperiod} -f -d -h -l 6
+    if [ ! -e "$fasta_file" ]
+    then
+        echo "No .fa files found in the directory."
+        exit 1
+    fi
+    
+    "$trf_dir"/trf "$fasta_file" "$match_score" "$mismatch_score" "$indel_score" "$pm" "$pi" "$min_score" "$max_period" -f -d -h -l 6
 done
+
+echo "TRF processing completed for all .fa files in $genomes_dir."
