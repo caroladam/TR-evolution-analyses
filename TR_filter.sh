@@ -63,4 +63,6 @@ bedmap --min-element "${outfile}.merged" "${outfile}.sorted" > "${outfile}.no_ov
 # Remove trailing decimals
 sed -i 's/\.000000//g' "${outfile}.no_overlaps"
 
+echo "Tandem Repeat filtering completed successfully."
+
 echo "Tandem Repeat filtering completed successfully"
