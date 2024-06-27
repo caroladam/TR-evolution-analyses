@@ -1,33 +1,29 @@
 #!/bin/bash
 
-lifted_trs="$1"
-query_tr_list="$2"
-target_prefix="$3"
-query_prefix="$4"
+# filename: align_lifted_TRs.sh
+# author: Adam, Carolina de Lima
 
-# # Check for required arguments
-if [ -z "$lifted_trs" ]
-then
-  echo "Script requires lifted TRs file (.bed) as argument"
+usage() {
+  echo "Usage: $0 -a <lifted_trs> -b <query_tr_list> -c <target_prefix> -d <query_prefix>"
   exit 1
-fi
+}
 
-if [ -z "$query_tr_list" ]
-then
-  echo "Script requires filtered TRF catalog file (.bed) from query genome as argument"
-  exit 1
-fi
+# Parse command-line options
+while getopts ":a:b:c:d:" opt
+do
+  case ${opt} in
+    a) lifted_trs="$OPTARG" ;;
+    b) query_tr_list="$OPTARG" ;;
+    c) target_prefix="$OPTARG" ;;
+    d) query_prefix="$OPTARG" ;;
+    *) usage ;;
+  esac
+done
 
-if [ -z "$target_prefix" ]
+# Check if all required arguments are provided
+if [ -z "$lifted_trs" ] || [ -z "$query_tr_list" ] || [ -z "$target_prefix" ] || [ -z "$query_prefix" ]
 then
-  echo "Script requires ID of target genome as argument"
-  exit 1
-fi
-
-if [ -z "$query_prefix" ]
-then
-  echo "Script requires ID of query genome as argument"
-  exit 1
+  usage
 fi
 
 # Create directories for fasta files and aligned files
@@ -35,7 +31,7 @@ fasta_dir=$(mktemp -d fasta_XXXXXX)
 aligned_dir="aligned"
 mkdir -p "$aligned_dir"
 
-# Intersect regions of the lifted TRs file with TRF catalog for the query genome
+# Intersect regions of the lifted TRs file with TRF catalog for the query genome - keeping those with >=50% reciprocal overlap
 shared_trs="shared_trs.bed"
 bedtools intersect -a "$lifted_trs" -b "$query_tr_list" -wa -wb -f 0.50 -r > "$shared_trs"
 
@@ -47,7 +43,7 @@ awk -v tgt="$target_prefix" -v qry="$query_prefix" \
 cd "$fasta_dir"
 for file in x*
 do
-    awk 'BEGIN {FS="\t"; OFS="_"} {print ">"$1, $2, $3, $4"\n"$5"\n"">"$6, $7, $8, $9, $11, $12, $13, $14"\n"$10}' "$file" > "$file.fa"
+  awk 'BEGIN {FS="\t"; OFS="_"} {print ">"$1, $2, $3, $4"\n"$5"\n"">"$6, $7, $8, $9, $11, $12, $13, $14"\n"$10}' "$file" > "$file.fa"
 done
 
 # Align fasta files with Needle using GNU Parallel
@@ -58,9 +54,9 @@ cd ../
 # Get alignment similarity scores
 for file in "${aligned_dir}"/*.out
 do
-    # Extract similarity scores
-    grep "Similarity" "${file}" | grep -o "[0-9]*\.[0-9]*" >> score.txt
-    grep ">${query_prefix}" "${file}" >> bedloc.txt
+  # Extract similarity scores
+  grep "Similarity" "${file}" | grep -o "[0-9]*\.[0-9]*" >> score.txt
+  grep ">${query_prefix}" "${file}" >> bedloc.txt
 done
 
 # Combine bed locations and scores into a single file with target and query prefixes
