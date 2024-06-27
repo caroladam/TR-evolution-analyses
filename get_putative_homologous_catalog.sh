@@ -1,34 +1,29 @@
 #!/bin/bash
 
-# Arguments
-fst_genome_shared_trs="$1"
-snd_genome_shared_trs="$2"
-fst_genome_catalog="$3"
-snd_genome_catalog="$4"
+# filename: get_putative_homologous_catalog.sh
+# author: Adam, Carolina de Lima (2024)
 
-# Check for required arguments
-if [ -z "$fst_genome_shared_trs" ]
-then
-  echo "Script requires shared TRs file (.bed) from previous alignment step - first genome"
+usage() {
+  echo "Usage: $0 -a <fst_genome_shared_trs> -b <snd_genome_shared_trs> -c <fst_genome_catalog> -d <snd_genome_catalog>"
   exit 1
-fi
+}
 
-if [ -z "$snd_genome_shared_trs" ]
-then
-  echo "Script requires shared TRs file (.bed) from previous alignment step - second genome"
-  exit 1
-fi
+# Parse arguments
+while getopts ":a:b:c:d:" opt
+do
+  case ${opt} in
+    a) fst_genome_shared_trs="$OPTARG" ;;
+    b) snd_genome_shared_trs="$OPTARG" ;;
+    c) fst_genome_catalog="$OPTARG" ;;
+    d) snd_genome_catalog="$OPTARG" ;;
+    *) usage ;;
+  esac
+done
 
-if [ -z "$fst_genome_catalog" ]
+# Check if all arguments are provided
+if [ -z "$fst_genome_shared_trs" ] || [ -z "$snd_genome_shared_trs" ] || [ -z "$fst_genome_catalog" ] || [ -z "$snd_genome_catalog" ]
 then
-  echo "Script requires TRF catalog for the first genome"
-  exit 1
-fi
-
-if [ -z "$snd_genome_catalog" ]
-then
-  echo "Script requires TRF catalog for the second genome"
-  exit 1
+  usage
 fi
 
 # Intersect files resulting from previous alignment step for both genomes
