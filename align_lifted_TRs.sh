@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # filename: align_lifted_TRs.sh
-# author: Adam, Carolina de Lima
+# author: Adam, Carolina de Lima (2024)
 
 usage() {
   echo "Usage: $0 -a <lifted_trs> -b <query_tr_list> -c <target_prefix> -d <query_prefix>"
