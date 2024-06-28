@@ -19,7 +19,7 @@ The catalogs of TRs identified in T2T genomes of ape species with [run_trf.sh](h
 - GNU Parallel
 - EMBOSS Needle
 
-Ensure that these tools are installed and available in your PATH or provide absolute paths for each tool.
+Make sure these tools are installed and available in your PATH or provide absolute paths for each tool.
 
 ## align_lifted_TRs.sh
 
@@ -35,7 +35,7 @@ This script processes tandem repeat (TR) data from two genomes, aligns the TR mo
 - -d **<query_prefix>**: Prefix/ID of the query genome.
 
 ### Example
-`./align_lifted_TRs.sh -a lifted_trs.bed -b query_tr_list.bed -c target_genome -d query_genome`
+`./align_lifted_TRs.sh -a human_to_chimp_lifted_trs.bed -b chimp_tr_list.bed -c human -d chimp`
 
 ### Outputs
 The script generates the following outputs:
@@ -60,7 +60,7 @@ This script processes tandem repeats (TRs) shared between two genomes and create
 - -d **<snd_genome_catalog>**: TRF catalog for the second genome
 
 ### Example
-`./get_putative_homology.sh -a genome1_shared_trs.bed -b genome2_shared_trs.bed -c genome1_trf_catalog.bed -d genome2_trf_catalog.bed`
+`./get_putative_homology.sh -a human_to_chimp_shared_trs.bed -b chimp_to_human_shared_trs.bed -c human_trf_catalog.bed -d chimp_trf_catalog.bed`
 
 ### Output
 The final output file is named `homologous_tr_catalog.bed` and contains the putative homologous TR catalog for the species pair.
