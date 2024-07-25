@@ -1,6 +1,6 @@
-# Scripts for analysis in Adam et al
+# TRACK - Tandem Repeat Analysis and Comparison Kit
 
-This directory contains scripts to run TRF analysis on a cluster and filter resulting TR files.
+The Tandem Repeat Analysis and Comparison Kit (TRACK) is an automated workflow designed to identify, align, and compare tandem repeats (TRs) across different species. The pipeline includes scripts for creating TR catalogs from reference genomes, filtering TRs and generating pairwise catalogs of putative homologous TRs.
 
 Reference genomes used to create TR catalogs were obtained from the T2T Consortium [Primate Project v2.0](https://github.com/marbl/Primates?tab=readme-ov-file) and [CHM13 Project v2.0](https://github.com/marbl/CHM13)
 The catalogs of TRs identified in T2T genomes of ape species with [run_trf.sh](https://github.com/caroladam/TR-evolution-analyses/blob/main/run_trf.sh) and filtered with [TR_filter.sh](https://github.com/caroladam/TR-evolution-analyses/blob/main/TR_filter.sh) can be found here: 
